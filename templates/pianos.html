@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='pianos.css') }}" />
+    <title>Пианино | МУЗТОРГ</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <a href="/" title="На главную">
+                    <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                </a>
+            </div>
+            <div class="header-title">Магазин для дебилов</div>
+        </div>
+        <main class="main">
+            <h1 class="section-title">ПИАНИНО</h1>
+            <div class="pianos-grid">
+                <div class="box">
+                    <div class="group">
+                        <div class="productImage"><img src="{{ url_for('static', filename='Yamaha U1.jpg') }}" alt="Yamaha U1" style="width: 260px; height: 200px;"></div>
+                        <div class="price">42 190р</div>
+                        <div class="category">Акустическое пианино</div>
+                        <div class="productName">Yamaha U1</div>
+                    </div>
+                </div>
+            
+                <div class="box">
+                    <div class="group">
+                        <div class="productImage"><img src="{{ url_for('static', filename='Roland FP-30X-BK.jpg') }}" alt="Roland FP-30" style="width: 260px; height: 200px;"></div>
+                        <div class="price">59 066р</div>
+                        <div class="category">Электронное пианино</div>
+                        <div class="productName">Roland FP-30</div>
+                    </div>
+                </div>
+            
+                <div class="box">
+                    <div class="group">
+                        <div class="productImage"><img src="{{ url_for('static', filename='Korg SV2.jpg') }}" alt="Korg SV-2" style="width: 260px; height: 200px;"></div>
+                        <div class="price">101 256р</div>
+                        <div class="category">Цифровое пианино</div>
+                        <div class="productName">Korg SV-2</div>
+                    </div>
+                </div>
+            
+                <div class="box">
+                    <div class="group">
+                        <div class="productImage"><img src="{{ url_for('static', filename='Casio PX-160.jpg') }}" alt="Casio PX-160" style="width: 260px; height: 200px;"></div>
+                        <div class="price">75 942р</div>
+                        <div class="category">Пианино для начинающих</div>
+                        <div class="productName">Casio PX-160</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+</body>
+</html>

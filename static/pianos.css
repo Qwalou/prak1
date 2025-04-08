@@ -1,0 +1,129 @@
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.container {
+    background-color: #f8f8ff;
+    min-height: 100vh;
+    color: #5a5a5a;
+}
+
+.header {
+    background-color: #e6e6fa;
+    border-bottom: 3px solid #bfbff2;
+    padding: 15px 40px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+}
+
+.header-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: auto;
+}
+
+.header-nav {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    color: #5a5a5a;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-link.active {
+    background-color: #bfbff2;
+    font-weight: bold;
+}
+
+.main {
+    display: block;
+    padding: 30px;
+    margin: 0 auto;
+    border: 2px solid #bfbff2;
+    width: 100%;
+    height: 100%;
+}
+
+.section-title {
+    font-size: 28px;
+    margin-bottom: 25px;
+    color: #333;
+    width: 100%;
+    text-align: center;
+}
+
+.pianos-grid {
+    border: 2px solid #000;
+    display: grid; /* Используем CSS Grid для расположения карточек */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Создаем колонки с минимальной шириной 260px */
+    gap: 30px; /* Увеличиваем отступ между карточками до 30px */
+    justify-content: center; /* Центрируем карточки по горизонтали */
+    align-items: start; /* Выравниваем карточки по верхнему краю */
+    max-width: 1800px; /* Устанавливаем максимальную ширину для контейнера */
+    height: auto; /* Высота автоматически подстраивается под содержимое */
+    margin: 0 auto; /* Центрируем контейнер по горизонтали */
+    position: relative;
+    top: 10px; /* Отступ сверху */
+}
+
+.box {
+    position: relative;
+    width: 100%; /* Устанавливаем ширину на 100% для адаптивности */
+    max-width: 260px; /* Устанавливаем максимальную ширину карточки */
+    height: 480px; /* Высота карточки */
+}
+
+.box .group {
+    position: relative; /* Изменено с fixed на relative */
+    width: 100%; /* Устанавливаем ширину на 100% */
+    height: 100%; /* Устанавливаем высоту на 100% */
+    background-color: #e6e6fa;
+    border-radius: 10px;
+    overflow: hidden; /* Скрываем переполнение */
+    padding: 10px; /* Добавляем внутренние отступы */
+}
+
+.box .productImage {
+    width: 100%; /* Устанавливаем ширину на 100% */
+    height: 240px; /* Высота изображения */
+    background-size: cover; /* Масштабируем изображение */
+    background-position: center; /* Центрируем изображение */
+}
+
+.box .price,
+.box .category,
+.box .productName {
+    width: 100%; /* Устанавливаем ширину на 100% */
+    border-radius: 10px;
+    background-color: #f8f8ff;
+    margin: 10px 0; /* Отступы сверху и снизу */
+    padding: 5px; /* Внутренние отступы */
+    box-sizing: border-box; /* Учитываем отступы в ширине */
+    overflow: hidden; /* Скрываем переполнение */
+    text-overflow: ellipsis; /* Добавляем многоточие для длинного текста */
+    white-space: nowrap; /* Запрещаем перенос строк */
+}
+
+.box .price {
+    height: 35px; /* Высота для цены */
+}
+
+.box .category {
+    height: 35px; /* Высота для категории */
+}
+
+.box .productName {
+    height: 45px; /* Высота для названия продукта */
+}

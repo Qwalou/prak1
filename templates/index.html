@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='index1.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='index2.css') }}" />
+</head>
+<body>
+    <div class="header-container">
+        <div class="logo-container">
+            <a href="/" title="На главную">
+                <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Лого"/>
+            </a>
+        </div>
+        
+        <div class="auth">
+            <a href="/register" id="reg">Зарегистрироваться</a>
+            <a href="/login" id="logIn">Войти</a>
+            {% if user %}
+                <div class="account">  
+                    <img src="{{ url_for('static', filename='account.png') }}" alt="Profile Picture" style="width: 50px; height: 50px;"/> 
+                    <p>{{ user }}</p>
+                    <a href="/logout">Выйти</a> 
+                </div> 
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="frame">
+        <div class="div">
+            <!-- Блоки категорий -->
+            <div class="categories-grid">
+                <a href="/electroguitars" class="category-card">
+                    <div class="category-title">ЭЛЕКТРОГИТАРЫ</div>
+                </a>
+
+                <a href="/pianos" class="category-card">
+                    <div class="category-title">ПИАНИНО</div>
+                </a>
+                <!-- Пустые блоки для будущих категорий -->
+                <div class="category-card empty"></div>
+                <div class="category-card empty"></div>
+                <div class="category-card empty"></div>
+                <div class="category-card empty"></div>
+            </div>
+        </div>
