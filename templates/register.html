@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='register_styles.css') }}">
+    <title>Регистрация</title>
+</head>
+<body>
+    <form method="post" action="/add_user">
+        <h3>Регистрация</h3>
+        <label for="name">Имя: </label>
+        <input type="text" maxlength="50" placeholder="Введите имя" name="name" id="name" required><br>
+        <label for="surname">Фамилия: </label>
+        <input type="text" maxlength="50" placeholder="Введите фамилию" name="surname" id="surname" required><br>
+        <label for="city">Город: </label>
+        <select name="city" id="city" required>
+            <option value="Не указан" selected>Выберите город</option>
+            <option value="Москва">Москва</option>
+            <option value="Санкт-Петербург">Санкт-Петербург</option>
+            <option value="Владивосток">Владивосток</option>
+            <option value="Екатеринбург">Екатеринбург</option>
+            <option value="Казань">Казань</option>
+            <option value="Красноярск">Красноярск</option>
+            <option value="Новосибирск">Новосибирск</option>
+            <option value="Зеленогорск">Зеленогорск</option>
+            <option value="Норильск">Норильск</option>
+        </select><br>
+        <label for="login">Логин: </label>
+        <input type="text" maxlength="50" placeholder="Введите логин" name="login" id="login" required><br>
+        <label for="pass">Пароль: </label>
+        <input type="password" maxlength="12" placeholder="Введите пароль" name="pass" id="password" required>
+        <input type="submit" value="Зарегистрироваться" id="register">
+    </form>
+</body>
+</html>
