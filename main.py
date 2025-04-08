@@ -50,6 +50,10 @@ def logout():
 def electroguitars():
     return render_template('electroguitars.html')
 
+@app.route('/pianos')
+def pianos():
+    return render_template('pianos.html')
+
 if __name__ == "__main__":
     create_db(app) 
     app.run(debug=True)
