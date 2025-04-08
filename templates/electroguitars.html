@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Электрогитары | МУЗТОРГ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='electroguitars.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='t_globals_0.1.css') }}">
+</head>
+<body>
+
+    <div class="electro-container">
+        <!-- Шапка -->
+        <div class="electro-header">
+            <div>
+                <a href="/" title="На главную">
+                    <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                </a>
+            </div>
+            <div class="header-title">Всем ку</div>
+            <div class="today-badge">Сегодня</div>
+        </div>
+
+        <!-- Основной контент -->
+        <main class="electro-main">
+            <h1 class="section-title">ЭЛЕКТРОГИТАРЫ</h1>
+            
+            <!-- Боковые фильтры -->
+            <aside class="filters-sidebar">
+                <div class="filter-block">
+                    <h3>Цена, ₽</h3>
+                    <div class="price-slider">
+                        <input type="range" min="5000" max="200000" value="100000">
+                        <div class="price-range">
+                            <span>5 000</span>
+                            <span>200 000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-block">
+                    <h3>Бренды</h3>
+                    <ul class="brand-list"><br>
+                        <li><label> Fender </label></li>
+                        <li><label> Gibson</label></li>
+                        <li><label> Ibanez</label></li>
+                    </ul>
+                </div>
+
+
+                </div>
+            </aside>
+        </main>
+    </div>
+</body>
+</html>
