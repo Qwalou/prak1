@@ -1,44 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='index1.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='index2.css') }}" />
 </head>
 <body>
-    <div class="header-container">
-        <div class="logo-container">
-            <a href="/" title="На главную">
-                <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Лого"/>
-            </a>
+    <div class="frame">
+        <div class="div">
+            <div>
+                <a href="/" title="На главную">
+                    <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                </a>
+            </div>
+            <div class="group">
+                <div class="overlap-group">
+                    <div class="text-wrapper"><a href="/electroguitars" style="color: inherit; text-decoration: none;">Гитары</a></div>
+                </div>
+            </div>
         </div>
-        
-        <div class="auth">
-            <a href="/register" id="reg">Зарегистрироваться</a>
-            <a href="/login" id="logIn">Войти</a>
+    </div>
+
+    <div class="auth">
+        <div class="account">
             {% if user %}
                 <div class="account">  
                     <img src="{{ url_for('static', filename='account.png') }}" alt="Profile Picture" style="width: 50px; height: 50px;"/> 
                     <p>{{ user }}</p>
                     <a href="/logout">Выйти</a> 
                 </div> 
+            {% else %}
+                <a href="{{ url_for('register') }}">Зарегистрироваться</a>
+                <a href="{{ url_for('login') }}">Войти</a>
             {% endif %}
         </div>
     </div>
-    
-    <div class="frame">
-        <div class="div">
-            <!-- Блоки категорий -->
-            <div class="categories-grid">
-                <a href="/electroguitars" class="category-card">
-                    <div class="category-title">ЭЛЕКТРОГИТАРЫ</div>
-                </a>
-                
-                <!-- Пустые блоки для будущих категорий -->
-                <div class="category-card empty"></div>
-                <div class="category-card empty"></div>
-                <div class="category-card empty"></div>
-                <div class="category-card empty"></div>
-                <div class="category-card empty"></div>
-            </div>
-        </div>
+</body>
+</html>
