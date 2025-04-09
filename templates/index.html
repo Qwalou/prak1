@@ -9,19 +9,21 @@
     <div class="header-container">
         <div class="logo-container">
             <a href="/" title="На главную">
-                <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Лого"/>
+                <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Лого" style="width: 150px; height: 150px;"/>
             </a>
         </div>
         
         <div class="auth">
-            <a href="/register" id="reg">Зарегистрироваться</a>
-            <a href="/login" id="logIn">Войти</a>
             {% if user %}
                 <div class="account">  
                     <img src="{{ url_for('static', filename='account.png') }}" alt="Profile Picture" style="width: 50px; height: 50px;"/> 
                     <p>{{ user }}</p>
-                    <a href="/logout">Выйти</a> 
-                </div> 
+                    <a href="/logout">Выйти</a>
+                    <a href="/cart">Корзина</a>
+                </div>
+            {% else %}
+                <a href="/register" id="reg">Зарегистрироваться</a>
+                <a href="/login" id="logIn">Войти</a>
             {% endif %}
         </div>
     </div>
