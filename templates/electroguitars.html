@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <title>Электрогитары | МУЗТОРГ</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='electroguitars.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='t_globals_0.1.css') }}">
+
 </head>
 <body>
     <div class="container">
@@ -15,6 +17,8 @@
                 </a>
             </div>
             <div class="header-title">Магазин для слепых</div>
+            <div class="header-title">Магазин для слепых</div>
+            <div class="today-badge">Сегодня</div>
         </div>
 
         <!-- Основной контент -->
@@ -35,6 +39,13 @@
                             <input type="hidden" name="product_price" value="89990">
                             <button type="submit" class="add-to-cart">Добавить в корзину</button>
                         </form>
+            <div class="pianos-grid">
+                <div class="box">
+                    <div class="group">
+                        <div class="productImage"><img src="{{ url_for('static', filename='Yamaha U1.jpg') }}" alt="Yamaha U1" style="width: 260px; height: 200px;"></div>
+                        <div class="price">42 190р</div>
+                        <div class="category">Акустическое пианино</div>
+                        <div class="productName">Yamaha U1</div>
                     </div>
                 </div>
                 
@@ -52,6 +63,15 @@
                             <button type="submit" class="add-to-cart">Добавить в корзину</button>
                         </form>
                     </div>
+
+                <div class="filter-block">
+                    <h3>Бренды</h3>
+                    <ul class="brand-list"> 
+                        <li><label> Fender</label></li>
+                        <li><label>Gibson</label></li>
+                        <li><label> Ibanez</label></li>
+                        <li><label> ESP</label></li>
+                    </ul>
                 </div>
                 
                 <div class="product-card">
