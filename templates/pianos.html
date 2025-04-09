@@ -11,6 +11,78 @@
         <div class="header">
             <div>
                 <a href="/" title="На главную">
+<<<<<<< HEAD
+                    <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Лого" style="width: 150px; height: 150px;"/>
+                </a>
+            </div>
+            <div class="header-title">Магазин для слепых</div>
+
+        </div>
+        <main class="main">
+            <h1 class="section-title">ПИАНИНО</h1>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='Yamaha U1.jpg') }}" alt="Yamaha U1">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Yamaha U1</h3>
+                        <div class="product-category">Акустическое пианино</div>
+                        <div class="product-price">42 190 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Yamaha U1">
+                            <input type="hidden" name="product_price" value="42190">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='Roland FP-30X-BK.jpg') }}" alt="Roland FP-30">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Roland FP-30</h3>
+                        <div class="product-category">Электронное пианино</div>
+                        <div class="product-price">59 066 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Roland FP-30">
+                            <input type="hidden" name="product_price" value="59066">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='Korg SV2.jpg') }}" alt="Korg SV-2">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Korg SV-2</h3>
+                        <div class="product-category">Цифровое пианино</div>
+                        <div class="product-price">101 256 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Korg SV-2">
+                            <input type="hidden" name="product_price" value="101256">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='Casio PX-160.jpg') }}" alt="Casio PX-160">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Casio PX-160</h3>
+                        <div class="product-category">Пианино для начинающих</div>
+                        <div class="product-price">75 942 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Casio PX-160">
+                            <input type="hidden" name="product_price" value="75942">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+=======
                     <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Лого" style="width: 100px; height: 100px;"/>
                 </a>
             </div>
@@ -52,9 +124,14 @@
                         <div class="price">75 942р</div>
                         <div class="category">Пианино для начинающих</div>
                         <div class="productName">Casio PX-160</div>
+>>>>>>> origin/Connection
                     </div>
                 </div>
             </div>
         </main>
+<<<<<<< HEAD
+    </div>
+=======
+>>>>>>> origin/Connection
 </body>
 </html>
