@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='total_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='form_styles.css') }}">
+    <title>Добавление товара</title>
+</head>
+<body>
+    <div class="container">
+
+        <div class="header">
+            <div>
+                <a href="/" title="На главную">
+                    <img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                </a>
+            </div>
+            <div class="header-title">Магазин для слепых</div>
+        </div>
+
+        <form method="post" id="product-form" action="/add_product">
+            <h3>Добавление товара</h3>
+            <label for="name">Бренд:</label>
+            <input type="text" id="brand" name="brand" maxlength="20" required><br>
+            <label for="price">Цена:</label>
+            <input type="number" id="price" name="price" min="1000" max="999999" min-length="4" max-length="6" required>₽<br>
+            <label for="category">Категория:</label>
+            <select id="category" name="category" required>
+                <option value="Электрогитары">Электрогитары</option>
+                <option value="Акустические гитары">Акустические гитары</option>
+                <option value="Классические гитары">Классические гитары</option>
+                <option value="Пианино">Пианино</option>
+                <option value="Электронные ударные">Электронные ударные</option>
+                <option value="Акустические ударные">Акустические ударные</option>
+            </select><br>
+            <button type="submit" id="add-product">Добавить товар</button>
+        </form>
+    </div>
+</body>
+</html>

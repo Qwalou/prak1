@@ -1,49 +1,62 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='register_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='total_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='form_styles.css') }}">
     <title>Регистрация</title>
 </head>
 <body>
-    <form method="post" action="/add_user">
-        <h3>Регистрация</h3>
-        <label for="name">Имя: </label>
-        <input type="text" maxlength="50" placeholder="Введите имя" name="name" id="name" required><br>
-        <label for="surname">Фамилия: </label>
-        <input type="text" maxlength="50" placeholder="Введите фамилию" name="surname" id="surname"><br>
-        <label for="city">Город: </label>
-        <select name="city" id="city">
-            <option value="Не указан" selected>Выберите город</option>
-            <option value="Москва">Москва</option>
-            <option value="Санкт-Петербург">Санкт-Петербург</option>
-            <option value="Владивосток">Владивосток</option>
-            <option value="Екатеринбург">Екатеринбург</option>
-            <option value="Казань">Казань</option>
-            <option value="Красноярск">Красноярск</option>
-            <option value="Новосибирск">Новосибирск</option>
-            <option value="Зеленогорск">Зеленогорск</option>
-            <option value="Норильск">Норильск</option>
-            <option value="Челябинск">Челябинск</option>
-            <option value="Ростов-на-Дону">Ростов-на-Дону</option>
-            <option value="Уфа">Уфа</option>
-            <option value="Тюмень">Тюмень</option>
-            <option value="Саратов">Саратов</option>
-            <option value="Воронеж">Воронеж</option>
-            <option value="Пермь">Пермь</option>
-            <option value="Ижевск">Ижевск</option>
-            <option value="Омск">Омск</option>
-            <option value="Томск">Томск</option>
-            <option value="Барнаул">Барнаул</option>
-            <option value="Калуга">Калуга</option>
-            <option value="Симферополь">Симферополь</option>
-        </select><br>
-        <label for="login">Логин: </label>
-        <input type="text" maxlength="50" placeholder="Введите логин" name="login" id="login" required><br>
-        <label for="pass">Пароль: </label>
-        <input type="password" maxlength="12" placeholder="Введите пароль" name="pass" id="password" required>
-        <input type="submit" value="Зарегистрироваться" id="register">
-    </form>
+    <div class="container">
+
+        <div class="header">
+            <div>
+                <a href="/" title="На главную">
+                    <img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                </a>
+            </div>
+            <div class="header-title">Магазин для слепых</div>
+        </div>
+
+        <form method="post" action="/add_user">
+            <h3>Регистрация</h3>
+            <label for="name">Имя: </label>
+            <input type="text" maxlength="50" placeholder="Ваше Имя" name="name" id="name" required><br>
+            <label for="surname">Фамилия: </label>
+            <input type="text" maxlength="50" placeholder="Ваша Фамилия" name="surname" id="surname"><br>
+            <label for="city">Город: </label>
+            <select name="city" id="city">
+                <option value="Не указан" selected>Ваш город</option>
+                <option value="Москва">Москва</option>
+                <option value="Санкт-Петербург">Санкт-Петербург</option>
+                <option value="Владивосток">Владивосток</option>
+                <option value="Екатеринбург">Екатеринбург</option>
+                <option value="Казань">Казань</option>
+                <option value="Красноярск">Красноярск</option>
+                <option value="Новосибирск">Новосибирск</option>
+                <option value="Зеленогорск">Зеленогорск</option>
+                <option value="Норильск">Норильск</option>
+                <option value="Челябинск">Челябинск</option>
+                <option value="Ростов-на-Дону">Ростов-на-Дону</option>
+                <option value="Уфа">Уфа</option>
+                <option value="Тюмень">Тюмень</option>
+                <option value="Саратов">Саратов</option>
+                <option value="Воронеж">Воронеж</option>
+                <option value="Пермь">Пермь</option>
+                <option value="Ижевск">Ижевск</option>
+                <option value="Омск">Омск</option>
+                <option value="Томск">Томск</option>
+                <option value="Барнаул">Барнаул</option>
+                <option value="Калуга">Калуга</option>
+                <option value="Симферополь">Симферополь</option>
+            </select><br>
+            <label for="login">Логин: </label>
+            <input type="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z._%+-]+$" maxlength="50" placeholder="Ваш логин" name="login" id="login" required><br>
+            <label for="pass">Пароль: </label>
+            <input type="password" minlength="8" maxlength="12" placeholder="Ваш пароль" name="pass" id="password" required>
+            <input type="submit" value="Зарегистрироваться" id="register">
+        </form>
+    </div>
 </body>
 </html>

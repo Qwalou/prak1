@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Акустические ударные | GuitarStar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='total_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='product_styles.css') }}">
+</head>
+<body>
+    <div class="container">
+
+        <div class="header">
+            <div>
+                <a href="/" title="На главную">
+                    <img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                </a>
+            </div>
+            <div class="header-title">Магазин для слепых</div>
+        </div>
+
+        <main class="main">
+            <h1 class="section-title">АКУСТИЧЕСКИЕ УДАРНЫЕ</h1>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='pearl_export.jpg') }}" alt="Pearl Export">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Pearl Export</h3>
+                        <div class="product-category">Акустическая ударная установка</div>
+                        <div class="product-price">159 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Pearl Export">
+                            <input type="hidden" name="product_price" value="159990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='tama_imperialstar.jpg') }}" alt="Tama Imperialstar">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Tama Imperialstar</h3>
+                        <div class="product-category">Акустическая ударная установка</div>
+                        <div class="product-price">139 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Tama Imperialstar">
+                            <input type="hidden" name="product_price" value="139990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='ludwig_breakbeats.jpg') }}" alt="Ludwig Breakbeats">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Ludwig Breakbeats</h3>
+                        <div class="product-category">Акустическая ударная установка</div>
+                        <div class="product-price">89 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Ludwig Breakbeats">
+                            <input type="hidden" name="product_price" value="89990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='yamaha_rydeen.jpg') }}" alt="Yamaha Rydeen">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Yamaha Rydeen</h3>
+                        <div class="product-category">Акустическая ударная установка</div>
+                        <div class="product-price">109 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Yamaha Rydeen">
+                            <input type="hidden" name="product_price" value="109990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <a href="/add_product" class="add-product-page">Добавить товар</a>
+    </div>
+</body>
+</html>
