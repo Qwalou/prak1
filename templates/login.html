@@ -1,22 +1,35 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='login_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='total_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='form_styles.css') }}">
     <title>Вход</title>
 </head>
 <body>
-    <form method="post" action="/login">
-        <h3>Вход</h3>
-        <label for="login">Логин: </label>
-        <input type="text" maxlength="50" placeholder="Введите логин" name="login" id="login" required><br>
-        <label for="password">Пароль: </label>
-        <input type="password" maxlength="12" placeholder="Введите пароль" name="pass" id="password" required><br>
-        <input type="submit" value="Войти" id="logIn">
-        {% if error %}
-            <p style="color: red;">{{ error }}</p>
-        {% endif %}
-    </form>
+    <div class="container">
+
+        <div class="header">
+            <div>
+                <a href="/" title="На главную">
+                    <img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                </a>
+            </div>
+            <div class="header-title">Магазин для слепых</div>
+        </div>
+
+        <form method="post" action="/login">
+            <h3>Вход</h3>
+            <label for="login">Логин: </label>
+            <input type="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z._%+-]+$" maxlength="50" placeholder="Ваш логин" name="login" id="login" required><br>
+            <label for="password">Пароль: </label>
+            <input type="password" minlength="8" maxlength="12" placeholder="Ваш пароль" name="pass" id="password" required><br>
+            <input type="submit" value="Войти" id="logIn">
+            {% if error %}
+                <p style="color: red;">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
 </body>
 </html>

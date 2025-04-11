@@ -2,52 +2,105 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Электрогитары | МУЗТОРГ</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='electroguitars.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='t_globals_0.1.css') }}">
-
+    <title>Электрогитары | GuitarStar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='total_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='product_styles.css') }}">
 </head>
 <body>
+    <div class="container">
 
-    <div class="electro-container">
-        <!-- Шапка -->
-        <div class="electro-header">
+        <div class="header">
             <div>
                 <a href="/" title="На главную">
-                    <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                    <img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
                 </a>
+                <div class="auth">
+                    {% if user %}
+                        <div class="account">  
+                            <img src="{{ url_for('static', filename='account.png') }}" alt="Profile Picture" style="width: 50px; height: 50px;"/> 
+                            <p>{{ user }}</p>
+                            <a href="/logout">Выйти</a>
+                            <a href="/cart">Корзина</a>
+                        </div>
+                    {% else %}
+                        <a href="/register" id="reg">Зарегистрироваться</a>
+                        <a href="/login" id="logIn">Войти</a>
+                    {% endif %}
+                </div>
             </div>
             <div class="header-title">Магазин для слепых</div>
-            <div class="today-badge">Сегодня</div>
         </div>
 
-        <!-- Основной контент -->
-        <main class="electro-main">
+        <main class="main">
             <h1 class="section-title">ЭЛЕКТРОГИТАРЫ</h1>
-            <div class="pianos-grid">
-                <div class="box">
-                    <div class="group">
-                        <div class="productImage"><img src="{{ url_for('static', filename='Yamaha U1.jpg') }}" alt="Yamaha U1" style="width: 260px; height: 200px;"></div>
-                        <div class="price">42 190р</div>
-                        <div class="category">Акустическое пианино</div>
-                        <div class="productName">Yamaha U1</div>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='fender_stratocaster.jpg') }}" alt="Fender Stratocaster">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Fender Stratocaster</h3>
+                        <div class="product-category">Электрогитара</div>
+                        <div class="product-price">89 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Fender Stratocaster">
+                            <input type="hidden" name="product_price" value="89990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
                     </div>
                 </div>
-
-                <div class="filter-block">
-                    <h3>Бренды</h3>
-                    <ul class="brand-list"> 
-                        <li><label> Fender</label></li>
-                        <li><label>Gibson</label></li>
-                        <li><label> Ibanez</label></li>
-                        <li><label> ESP</label></li>
-                    </ul>
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='gibson_les_paul.jpg') }}" alt="Gibson Les Paul">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gibson Les Paul</h3>
+                        <div class="product-category">Электрогитара</div>
+                        <div class="product-price">159 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Gibson Les Paul">
+                            <input type="hidden" name="product_price" value="159990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
                 </div>
-
-
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='ibanez_rg.jpg') }}" alt="Ibanez RG">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Ibanez RG</h3>
+                        <div class="product-category">Электрогитара</div>
+                        <div class="product-price">75 490 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Ibanez RG">
+                            <input type="hidden" name="product_price" value="75490">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
                 </div>
-            </aside>
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='esp_eclipse.jpg') }}" alt="ESP Eclipse">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">ESP Eclipse</h3>
+                        <div class="product-category">Электрогитара</div>
+                        <div class="product-price">129 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="ESP Eclipse">
+                            <input type="hidden" name="product_price" value="129990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </main>
+        <a href="/add_product" class="add-product-page">Добавить товар</a>
     </div>
 </body>
 </html>

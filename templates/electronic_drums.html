@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Электронные ударные | GuitarStar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='total_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='product_styles.css') }}">
+</head>
+<body>
+    <div class="container">
+
+        <div class="header">
+            <div>
+                <a href="/" title="На главную">
+                    <img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                </a>
+            </div>
+            <div class="header-title">Магазин для слепых</div>
+        </div>
+
+        <main class="main">
+            <h1 class="section-title">ЭЛЕКТРОННЫЕ УДАРНЫЕ</h1>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='roland_td17kvx.jpg') }}" alt="Roland TD-17KVX">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Roland TD-17KVX</h3>
+                        <div class="product-category">Электронная ударная установка</div>
+                        <div class="product-price">249 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Roland TD-17KVX">
+                            <input type="hidden" name="product_price" value="249990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='alesis_nitro_mesh.jpg') }}" alt="Alesis Nitro Mesh">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Alesis Nitro Mesh</h3>
+                        <div class="product-category">Электронная ударная установка</div>
+                        <div class="product-price">79 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Alesis Nitro Mesh">
+                            <input type="hidden" name="product_price" value="79990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='yamaha_dtx6kx.jpg') }}" alt="Yamaha DTX6K-X">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Yamaha DTX6K-X</h3>
+                        <div class="product-category">Электронная ударная установка</div>
+                        <div class="product-price">189 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Yamaha DTX6K-X">
+                            <input type="hidden" name="product_price" value="189990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='simmons_sd600.jpg') }}" alt="Simmons SD600">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Simmons SD600</h3>
+                        <div class="product-category">Электронная ударная установка</div>
+                        <div class="product-price">129 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Simmons SD600">
+                            <input type="hidden" name="product_price" value="129990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <a href="/add_product" class="add-product-page">Добавить товар</a>
+    </div>
+</body>
+</html>

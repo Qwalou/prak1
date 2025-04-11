@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='total_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}" />
+    <title>Корзина</title>
+</head>
+<body>
+    <div class="container">
+
+        <div class="header">
+            <div>
+                <a href="/" title="На главную">
+                    <img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                </a>
+            </div>
+            <div class="header-title">Магазин для слепых</div>
+        </div>
+
+        <div class="cart-container">
+            <h1>Ваша корзина</h1>
+            
+            {% if cart_items %}
+                <div class="cart-items">
+                    {% for item in cart_items %}
+                    <div class="cart-item">
+                        <div class="item-name">{{ item.name }}</div>
+                        <div class="item-quantity">
+                            <form action="{{ url_for('decrease_quantity') }}" method="post" class="quantity-form">
+                                <input type="hidden" name="product_name" value="{{ item.name }}">
+                                <input type="hidden" name="product_price" value="{{ item.price }}">
+                                <button type="submit">-</button>
+                            </form>
+                            <span>{{ item.quantity }}</span>
+                            <form action="{{ url_for('increase_quantity') }}" method="post" class="quantity-form">
+                                <input type="hidden" name="product_name" value="{{ item.name }}">
+                                <input type="hidden" name="product_price" value="{{ item.price }}">
+                                <button type="submit">+</button>
+                            </form>
+                        </div>
+                        <div class="item-price">{{ item.price }}р × {{ item.quantity }} = {{ item.price|int * item.quantity }}р</div>
+                        <form action="{{ url_for('remove_from_cart') }}" method="post" class="remove-form">
+                            <input type="hidden" name="product_name" value="{{ item.name }}">
+                            <input type="hidden" name="product_price" value="{{ item.price }}">
+                            <button type="submit">Удалить все</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="cart-total">
+                    <strong>Итого: {{ total }}р</strong>
+                </div>
+                
+                <form action="{{ url_for('checkout') }}" method="post" class="checkout-form">
+                    <button type="submit">Оформить заказ</button>
+                </form>
+            {% else %}
+                <p>Ваша корзина пуста</p>
+            {% endif %}
+        </div>
+    </div>  
+</body>
+</html>

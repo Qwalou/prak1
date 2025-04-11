@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Акустические гитары | GuitarStar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='total_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='product_styles.css') }}">
+</head>
+<body>
+    <div class="container">
+
+        <div class="header">
+            <div>
+                <a href="/" title="На главную">
+                    <img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                </a>
+            </div>
+            <div class="header-title">Магазин для слепых</div>
+        </div>
+
+        <main class="main">
+            <h1 class="section-title">АКУСТИЧЕСКИЕ ГИТАРЫ</h1>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='martin_d28.jpg') }}" alt="Martin D-28">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Martin D-28</h3>
+                        <div class="product-category">Акустическая гитара</div>
+                        <div class="product-price">149 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Martin D-28">
+                            <input type="hidden" name="product_price" value="149990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='taylor_814ce.jpg') }}" alt="Taylor 814ce">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Taylor 814ce</h3>
+                        <div class="product-category">Акустическая гитара</div>
+                        <div class="product-price">179 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Taylor 814ce">
+                            <input type="hidden" name="product_price" value="179990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='gibson_j45.jpg') }}" alt="Gibson J-45">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gibson J-45</h3>
+                        <div class="product-category">Акустическая гитара</div>
+                        <div class="product-price">159 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Gibson J-45">
+                            <input type="hidden" name="product_price" value="159990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="{{ url_for('static', filename='yamaha_fg800.jpg') }}" alt="Yamaha FG800">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Yamaha FG800</h3>
+                        <div class="product-category">Акустическая гитара</div>
+                        <div class="product-price">29 990 ₽</div>
+                        <form action="{{ url_for('add_to_cart') }}" method="post">
+                            <input type="hidden" name="product_name" value="Yamaha FG800">
+                            <input type="hidden" name="product_price" value="29990">
+                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <a href="/add_product" class="add-product-page">Добавить товар</a>
+    </div>
+</body>
+</html>
