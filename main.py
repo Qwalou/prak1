@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, session, Response
 from models import db, create_db, User, Product, Category
 from login_register import add_user, validate_user
+from cart_handler import (login_required, get_cart_items, calculate_total,
+                          add_to_cart_handler, remove_from_cart_handler,
+                          increase_quantity_handler, decrease_quantity_handler,
+                          checkout_handler)
 
 app = Flask(__name__)
 app.secret_key = "secret_key"
@@ -49,123 +53,39 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/cart')
+@login_required
 def cart():
-    if 'user' not in session:
-        return redirect(url_for('login'))
-    
-    cart_items = session.get('cart', [])
-    
-    items_summary = {}
-    for item in cart_items:
-        key = (item['name'], item['price'])
-        if key in items_summary:
-            items_summary[key]['quantity'] += 1
-        else:
-            items_summary[key] = {
-                'name': item['name'],
-                'price': item['price'],
-                'quantity': 1
-            }
-    
-    items_list = list(items_summary.values())
-    total = sum(int(item['price']) * item['quantity'] for item in items_list)
-    
+    items_list = get_cart_items()
+    total = calculate_total(items_list)
     return render_template('cart.html', 
                          cart_items=items_list, 
                          total=total,
                          user=session.get('user'))
 
 @app.route('/add_to_cart', methods=['POST'])
+@login_required
 def add_to_cart():
-    if 'user' not in session:
-        return redirect(url_for('login'))  
-
-    product_name = request.form.get('product_name')
-    product_price = request.form.get('product_price')
-
-    if not product_name or not product_price:
-        return redirect(url_for('pianos'))
-
-    if 'cart' not in session:
-        session['cart'] = []
-    
-    session['cart'].append({
-        'name': product_name, 
-        'price': product_price
-    })
-    session.modified = True
-    
-    return redirect(request.referrer or url_for('pianos'))
+    return add_to_cart_handler()
 
 @app.route('/remove_from_cart', methods=['POST'])
+@login_required
 def remove_from_cart():
-    if 'user' not in session:
-        return redirect(url_for('login'))  
-
-    product_name = request.form.get('product_name')
-    product_price = request.form.get('product_price')
-    
-    if not product_name or not product_price or 'cart' not in session:
-        return redirect(url_for('cart'))
-    
-    session['cart'] = [
-        item for item in session['cart'] 
-        if item['name'] != product_name or item['price'] != product_price
-    ]
-    session.modified = True
-    
-    return redirect(url_for('cart'))
+    return remove_from_cart_handler()
 
 @app.route('/increase_quantity', methods=['POST'])
+@login_required
 def increase_quantity():
-    if 'user' not in session:
-        return redirect(url_for('login'))  
-
-    product_name = request.form.get('product_name')
-    product_price = request.form.get('product_price')
-
-    if not product_name or not product_price:
-        return redirect(url_for('cart'))
-
-    if 'cart' not in session:
-        session['cart'] = []
-    
-    session['cart'].append({
-        'name': product_name, 
-        'price': product_price
-    })
-    session.modified = True
-    
-    return redirect(url_for('cart'))
+    return increase_quantity_handler()
 
 @app.route('/decrease_quantity', methods=['POST'])
+@login_required
 def decrease_quantity():
-    if 'user' not in session:
-        return redirect(url_for('login'))  
-
-    product_name = request.form.get('product_name')
-    product_price = request.form.get('product_price')
-    
-    if not product_name or not product_price or 'cart' not in session:
-        return redirect(url_for('cart'))
-    
-    for i, item in enumerate(session['cart']):
-        if item['name'] == product_name and item['price'] == product_price:
-            session['cart'].pop(i)
-            session.modified = True
-            break
-    
-    return redirect(url_for('cart'))
+    return decrease_quantity_handler()
 
 @app.route('/checkout', methods=['POST'])
+@login_required
 def checkout():
-    if 'user' not in session:
-        return redirect(url_for('login'))  
-
-    session.pop('cart', None)
-    session.modified = True
-    
-    return redirect(url_for('cart'))
+    return checkout_handler()
 
 def get_route_for_category(category_name):
     category_mapping = {
@@ -219,17 +139,14 @@ def product_image(product_id):
         return "", 404
     return Response(product.photo, mimetype='image/jpeg')
 
-
 @app.route('/electroguitars')
 def electroguitars():
     category = Category.query.filter_by(name="Электрогитары").first()
     if category:
-        products = Product.query.filter_by(category_id=category.id).all()  
+        products = Product.query.filter_by(category_id=category.id).all()
     else:
         products = []
     return render_template('electroguitars.html', products=products, user=session.get('user'))
-
-
 
 @app.route('/acoustic_guitars')
 def acoustic_guitars():
@@ -240,37 +157,29 @@ def acoustic_guitars():
         products = []
     return render_template('acoustic_guitars.html', products=products, user=session.get('user'))
 
-
 @app.route('/classical_guitars')
 def classical_guitars():
     category = Category.query.filter_by(name="Классические гитары").first()
     if category:
-        products = Product.query.filter_by(category_id=category.id).all() 
+        products = Product.query.filter_by(category_id=category.id).all()
     else:
         products = []
     return render_template('classical_guitars.html', products=products, user=session.get('user'))
-
 
 @app.route('/pianos')
 def pianos():
     category = Category.query.filter_by(name="Пианино").first()
     if category:
-        products = Product.query.filter_by(category_id=category.id).all()  
+        products = Product.query.filter_by(category_id=category.id).all()
     else:
         products = []
     return render_template('pianos.html', products=products, user=session.get('user'))
 
-
-
 @app.route('/electronic_drums')
 def electronic_drums():
     category = Category.query.filter_by(name="Электронные ударные").first()
-    if 'user' in session:
-        user = User.query.filter_by(name=session['user']).first()
-        if user and category:
-            products = Product.query.filter_by(category_id=category.id, user_id=user.id).all()
-        else:
-            products = []
+    if category:
+        products = Product.query.filter_by(category_id=category.id).all()
     else:
         products = []
     return render_template('electronic_drums.html', products=products, user=session.get('user'))
@@ -279,7 +188,7 @@ def electronic_drums():
 def acoustic_drums():
     category = Category.query.filter_by(name="Акустические ударные").first()
     if category:
-        products = Product.query.filter_by(category_id=category.id).all()  
+        products = Product.query.filter_by(category_id=category.id).all()
     else:
         products = []
     return render_template('acoustic_drums.html', products=products, user=session.get('user'))
