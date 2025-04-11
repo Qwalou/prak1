@@ -17,6 +17,18 @@
                 </a>
             </div>
             <div class="header-title">Магазин для слепых</div>
+            <div class="auth">
+                {% if user %}
+                    <div class="account">  
+                        <img src="{{ url_for('static', filename='images/account.png') }}" alt="Profile Picture" style="width: 50px; height: 50px;"/> 
+                        <p>{{ session.user }} ({{ session.role }})</p>
+                        <a href="/logout">Выйти</a>
+                    </div>
+                {% else %}
+                    <a href="/register" id="reg">Зарегистрироваться</a>
+                    <a href="/login" id="logIn">Войти</a>
+                {% endif %}
+            </div>
         </div>
 
         <form method="post" id="product-form" action="/add_product" enctype="multipart/form-data">

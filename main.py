@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, session, Response
-from models import db, create_db, User, Product, Category
-from login_register import add_user, validate_user
+from flask import Flask, render_template, request, redirect, url_for, session, abort, Response
+from functools import wraps
+from models import db, User, Product, Category
+from login_register import add_user, validate_user, create_roles
 from cart_handler import (login_required, get_cart_items, calculate_total,
                           add_to_cart_handler, remove_from_cart_handler,
                           increase_quantity_handler, decrease_quantity_handler,
@@ -12,10 +13,26 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://HOME-PC\\SQLEXPRESS/db1?
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
+def create_db(app):
+    with app.app_context():
+        db.create_all()
+        create_roles()
+
+def role_required(required_role):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if session.get('role') != required_role:
+                abort(403)  
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
+
 @app.route('/')
 def index():
-    user = session.get('user')
-    return render_template('index.html', user=user)
+    if session.get('role') == 'Продавец':
+        return redirect(url_for('add_product'))
+    return render_template('index.html', user=session.get('user'))
 
 @app.route('/register')
 def register():
@@ -38,10 +55,16 @@ def login():
     if request.method == 'POST':
         login_input = request.form['login']
         password_input = request.form['pass']
+        role_input = request.form['role']
         user = validate_user(login_input, password_input)
         if user:
-            session['user'] = user.name 
-            return redirect(url_for('index'))  
+            session['user'] = user.name
+            session['role'] = role_input
+
+            if role_input == 'Продавец':
+                return redirect(url_for('add_product'))
+            else:
+                return redirect(url_for('index'))
         else:
             error = "Неверный логин или пароль"  
     return render_template('login.html', error=error)
@@ -54,6 +77,7 @@ def logout():
 
 @app.route('/cart')
 @login_required
+@role_required('Покупатель')
 def cart():
     items_list = get_cart_items()
     total = calculate_total(items_list)
@@ -64,26 +88,31 @@ def cart():
 
 @app.route('/add_to_cart', methods=['POST'])
 @login_required
+@role_required('Покупатель')
 def add_to_cart():
     return add_to_cart_handler()
 
 @app.route('/remove_from_cart', methods=['POST'])
 @login_required
+@role_required('Покупатель')
 def remove_from_cart():
     return remove_from_cart_handler()
 
 @app.route('/increase_quantity', methods=['POST'])
 @login_required
+@role_required('Покупатель')
 def increase_quantity():
     return increase_quantity_handler()
 
 @app.route('/decrease_quantity', methods=['POST'])
 @login_required
+@role_required('Покупатель')
 def decrease_quantity():
     return decrease_quantity_handler()
 
 @app.route('/checkout', methods=['POST'])
 @login_required
+@role_required('Покупатель')
 def checkout():
     return checkout_handler()
 
@@ -99,6 +128,8 @@ def get_route_for_category(category_name):
     return category_mapping.get(category_name, "index")  
 
 @app.route('/add_product', methods=['GET', 'POST'])
+@login_required
+@role_required('Продавец')
 def add_product():
     if 'user' not in session:
         return redirect(url_for('register'))
