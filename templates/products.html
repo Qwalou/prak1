@@ -2,13 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Электронные ударные | GuitarStar</title>
+    <title>{{ category_name }} | GuitarStar</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/total_styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/product_styles.css') }}">
 </head>
 <body>
     <div class="container">
-
         <div class="header">
             <div>
                 <a href="/" title="На главную">
@@ -20,19 +19,23 @@
                 {% if user %}
                     <div class="account">  
                         <img src="{{ url_for('static', filename='images/account.png') }}" alt="Profile Picture" style="width: 50px; height: 50px;"/> 
-                        <p>{{ user }}</p>
+                        <p>{{ session.user }} ({{ session.role }})</p>
                         <a href="/logout">Выйти</a>
-                        <a href="/cart">Корзина</a>
+                        {% if session.role == 'Покупатель' %}
+                            <a href="/cart">Корзина</a>
+                        {% else %}
+                            <a href="/add_product" class="add-product-page">Добавить товар</a>
+                        {% endif %}
                     </div>
                 {% else %}
-                    <a href="/register" id="reg">Зарегистрироваться</a>
-                    <a href="/login" id="logIn">Войти</a>
+                    <a href="/register">Зарегистрироваться</a>
+                    <a href="/login">Войти</a>
                 {% endif %}
             </div>
         </div>
 
         <main class="main">
-            <h1 class="section-title">ЭЛЕКТРОННЫЕ УДАРНЫЕ</h1>
+            <h1 class="section-title">{{ category_name|upper }}</h1>
             <div class="products-grid">
                 {% for product in products %}
                     <div class="product-card">
@@ -51,18 +54,21 @@
                             <h3 class="product-title">{{ product.brand }}</h3>
                             <div class="product-category">{{ product.category.name }}</div>
                             <div class="product-price">{{ product.price }} ₽</div>
-                            <div class="product-added-by">Добавил(а): {{ product.user.name }}</div>
-                            <form action="{{ url_for('add_to_cart') }}" method="post">
-                                <input type="hidden" name="product_name" value="{{ product.brand }}">
-                                <input type="hidden" name="product_price" value="{{ product.price }}">
-                                <button type="submit" class="add-to-cart">Добавить в корзину</button>
-                            </form>
+                            {% if session.role == 'Продавец' %}
+                                <a href="/delete_product/{{ product.id }}" class="delete-product">Удалить товар</a>
+                            {% else %}
+                                <div class="product-added-by">Добавил(а): {{ product.user.name }}</div>
+                                <form action="{{ url_for('add_to_cart') }}" method="post">
+                                    <input type="hidden" name="product_name" value="{{ product.brand }}">
+                                    <input type="hidden" name="product_price" value="{{ product.price }}"><br>
+                                    <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                                </form>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}
             </div>
         </main>
-        <a href="/add_product" class="add-product-page">Добавить товар</a>
     </div>
 </body>
 </html>

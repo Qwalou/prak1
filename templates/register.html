@@ -54,7 +54,9 @@
             <label for="login">Логин: </label>
             <input type="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z._%+-]+$" maxlength="50" placeholder="Ваш логин" name="login" id="login" required><br>
             <label for="pass">Пароль: </label>
-            <input type="password" minlength="8" maxlength="12" placeholder="Ваш пароль" name="pass" id="password" required>
+            <input type="password" minlength="8" maxlength="12" placeholder="Ваш пароль" name="pass" id="password" required><br>
+            <label for="agreement">Я соглашаюсь на обработку персональных данных</label> 
+            <input type="checkbox" name="agreement" id="agreement-checkbox" required>
             <input type="submit" value="Зарегистрироваться" id="register">
         </form>
     </div>

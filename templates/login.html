@@ -25,6 +25,11 @@
             <input type="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z._%+-]+$" maxlength="50" placeholder="Ваш логин" name="login" id="login" required><br>
             <label for="password">Пароль: </label>
             <input type="password" minlength="8" maxlength="12" placeholder="Ваш пароль" name="pass" id="password" required><br>
+            <label for="role">Войти как: </label>
+            <select name="role" id="role">
+                <option value="Покупатель">Покупатель</option>
+                <option value="Продавец">Продавец</option>
+            </select><br>
             <input type="submit" value="Войти" id="logIn">
             {% if error %}
                 <p style="color: red;">{{ error }}</p>

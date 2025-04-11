@@ -1,60 +1,70 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/total_styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
-</head>
-<body>
-    <div class="container">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/total_styles.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+    </head>
+    <body>
+        <div class="container">
 
-        <div class="header">
-            <div>
-                <img class="logo" src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+            <div class="header">
+                <div>
+                    <img class="logo" src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                </div>
+                <div class="header-title">Магазин для слепых</div>
+                <div class="search-container">
+                    <form action="{{ url_for('search') }}" method="GET">
+                        <input type="text" name="query" placeholder="Поиск товаров..." class="search-input">
+                        <button type="submit" class="search-button">Найти</button>
+                    </form>
+                </div>
+                <div class="auth">
+                    {% if user %}
+                        <div class="account">  
+                            <img src="{{ url_for('static', filename='images/account.png') }}" alt="Profile Picture" style="width: 50px; height: 50px;"/> 
+                            <p>{{ session.user }} ({{ session.role }})</p>
+                            <a href="/logout">Выйти</a>
+                            {% if session.role == 'Покупатель' %}
+                                <a href="/cart">Корзина</a>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <a href="/register">Зарегистрироваться</a>
+                        <a href="/login">Войти</a>
+                    {% endif %}
+                </div>
             </div>
-            <div class="header-title">Магазин для слепых</div>
-            <div class="auth">
-                {% if user %}
-                    <div class="account">  
-                        <img src="{{ url_for('static', filename='images/account.png') }}" alt="Profile Picture" style="width: 50px; height: 50px;"/> 
-                        <p>{{ user }}</p>
-                        <a href="/logout">Выйти</a>
-                        <a href="/cart">Корзина</a>
+
+            <div class="frame">
+                <div class="div">
+                    <div class="categories-grid">
+                        <a href="{{ url_for('show_products', category_name='Электрогитары') }}" class="category-card">
+                            <div class="category-title">ЭЛЕКТРОГИТАРЫ</div>
+                        </a>
+    
+                        <a href="{{ url_for('show_products', category_name='Акустические гитары') }}" class="category-card">
+                            <div class="category-title">АКУСТИЧЕСКИЕ ГИТАРЫ</div>
+                        </a>
+                    
+                        <a href="{{ url_for('show_products', category_name='Классические гитары') }}" class="category-card">
+                            <div class="category-title">КЛАССИЧЕСКИЕ ГИТАРЫ</div>
+                        </a>
+    
+                        <a href="{{ url_for('show_products', category_name='Пианино') }}" class="category-card">
+                            <div class="category-title">ПИАНИНО</div>
+                        </a>
+    
+                        <a href="{{ url_for('show_products', category_name='Электронные ударные') }}" class="category-card">
+                            <div class="category-title">ЭЛЕКТРОННЫЕ УДАРНЫЕ</div>
+                        </a>
+                    
+                        <a href="{{ url_for('show_products', category_name='Акустические ударные') }}" class="category-card">
+                            <div class="category-title">АКУСТИЧЕСКИЕ УДАРНЫЕ</div>
+                        </a>
                     </div>
-                {% else %}
-                    <a href="/register" id="reg">Зарегистрироваться</a>
-                    <a href="/login" id="logIn">Войти</a>
-                {% endif %}
-            </div>
-        </div>
-
-        <div class="frame">
-            <div class="div">
-                <div class="categories-grid">
-                    <a href="/electroguitars" class="category-card">
-                        <div class="category-title">ЭЛЕКТРОГИТАРЫ</div>
-                    </a>
-    
-                    <a href="/acoustic_guitars" class="category-card">
-                        <div class="category-title">АКУСТИЧЕСКИЕ ГИТАРЫ</div>
-                    </a>
-                    
-                    <a href="/classical_guitars" class="category-card">
-                        <div class="category-title">КЛАССИЧЕСКИЕ ГИТАРЫ</div>
-                    </a>
-    
-                    <a href="/pianos" class="category-card">
-                        <div class="category-title">ПИАНИНО</div>
-                    </a>
-    
-                    <a href="/electronic_drums" class="category-card">
-                        <div class="category-title">ЭЛЕКТРОННЫЕ УДАРНЫЕ</div>
-                    </a>
-                    
-                    <a href="/acoustic_drums" class="category-card">
-                        <div class="category-title">АКУСТИЧЕСКИЕ УДАРНЫЕ</div>
-                    </a>
                 </div>
             </div>
         </div>
-    </div>
+    </body>
+</html>
