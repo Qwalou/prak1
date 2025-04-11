@@ -60,13 +60,14 @@
     color: #333;
 }
 
-.add-to-cart, .add-product-page {
+.add-to-cart, .delete-product {
     width: 100%;
     padding: 10px;
     background-color: #bfbff2;
     border: none;
     border-radius: 5px;
     color: #333;
+    text-align: center;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -74,6 +75,6 @@
     text-decoration: none;
 }
 
-.add-to-cart:hover, .add-product-page:hover {
+.add-to-cart:hover, .delete-product:hover {
     background-color: #a8a8e0;
 }

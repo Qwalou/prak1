@@ -14,17 +14,17 @@ class User(db.Model):
     products = db.relationship('Product', backref='user', lazy=True)
 
 class Role(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String(20), unique=True)
     users = db.relationship('User', backref='role', lazy=True)
 
 class Category(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String(50), nullable=False, unique=True)  
     products = db.relationship('Product', backref='category', lazy=True)
 
 class Product(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
     brand = db.Column(db.String(20), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     photo = db.Column(LargeBinary)

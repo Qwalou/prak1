@@ -39,8 +39,19 @@ input, select {
     box-sizing: border-box; 
 }
 
+#agreement-checkbox {
+    right: 210px;
+    bottom: 70px;
+    position: relative;
+}
+
 #price {
     width: 120px;
+}
+
+#register {
+    bottom: 50px;
+    position: relative;
 }
 
 #logIn, #register, #add-product {

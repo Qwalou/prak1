@@ -47,7 +47,7 @@ def create_account():
         login = request.form["login"]
         password = request.form["pass"]
         add_user(name, surname, city, login, password)
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -116,17 +116,6 @@ def decrease_quantity():
 def checkout():
     return checkout_handler()
 
-def get_route_for_category(category_name):
-    category_mapping = {
-        "Электрогитары": "electroguitars",
-        "Акустические гитары": "acoustic_guitars",
-        "Классические гитары": "classical_guitars",
-        "Пианино": "pianos",
-        "Электронные ударные": "electronic_drums",
-        "Акустические ударные": "acoustic_drums",
-    }
-    return category_mapping.get(category_name, "index")  
-
 @app.route('/add_product', methods=['GET', 'POST'])
 @login_required
 @role_required('Продавец')
@@ -158,10 +147,8 @@ def add_product():
         db.session.add(new_product)
         db.session.commit()
 
-        route_name = get_route_for_category(category_name)
-        return redirect(url_for(route_name))
-
-    return render_template('product_form.html')
+        return redirect(url_for('show_products', category_name=category_name))
+    return render_template('add_product.html')
 
 @app.route('/product_image/<int:product_id>')
 def product_image(product_id):
@@ -170,60 +157,56 @@ def product_image(product_id):
         return "", 404
     return Response(product.photo, mimetype='image/jpeg')
 
-@app.route('/electroguitars')
-def electroguitars():
-    category = Category.query.filter_by(name="Электрогитары").first()
-    if category:
-        products = Product.query.filter_by(category_id=category.id).all()
-    else:
-        products = []
-    return render_template('electroguitars.html', products=products, user=session.get('user'))
+@app.route('/delete_product/<int:product_id>', methods=['GET', 'POST'])
+@login_required
+@role_required('Продавец')
+def delete_product(product_id):
+    product = Product.query.get_or_404(product_id)
+    
+    user = User.query.filter_by(name=session['user']).first()
+    if not user or product.user_id != user.id:
+        abort(403)
+    
+    category_name = product.category.name
+    db.session.delete(product)
+    db.session.commit()
+    
+    return redirect(url_for('show_products', category_name=category_name))
 
-@app.route('/acoustic_guitars')
-def acoustic_guitars():
-    category = Category.query.filter_by(name="Акустические гитары").first()
-    if category:
-        products = Product.query.filter_by(category_id=category.id).all()
-    else:
-        products = []
-    return render_template('acoustic_guitars.html', products=products, user=session.get('user'))
+def get_route_for_category(category_name):
+    return url_for('show_products', category_name=category_name)
 
-@app.route('/classical_guitars')
-def classical_guitars():
-    category = Category.query.filter_by(name="Классические гитары").first()
+@app.route('/products/<category_name>')
+def show_products(category_name):
+    category = Category.query.filter_by(name=category_name).first()
     if category:
         products = Product.query.filter_by(category_id=category.id).all()
     else:
         products = []
-    return render_template('classical_guitars.html', products=products, user=session.get('user'))
+    return render_template('products.html', products=products, category_name=category_name, user=session.get('user'))
 
-@app.route('/pianos')
-def pianos():
-    category = Category.query.filter_by(name="Пианино").first()
-    if category:
-        products = Product.query.filter_by(category_id=category.id).all()
-    else:
-        products = []
-    return render_template('pianos.html', products=products, user=session.get('user'))
-
-@app.route('/electronic_drums')
-def electronic_drums():
-    category = Category.query.filter_by(name="Электронные ударные").first()
-    if category:
-        products = Product.query.filter_by(category_id=category.id).all()
-    else:
-        products = []
-    return render_template('electronic_drums.html', products=products, user=session.get('user'))
-
-@app.route('/acoustic_drums')
-def acoustic_drums():
-    category = Category.query.filter_by(name="Акустические ударные").first()
-    if category:
-        products = Product.query.filter_by(category_id=category.id).all()
-    else:
-        products = []
-    return render_template('acoustic_drums.html', products=products, user=session.get('user'))
+@app.route('/search')
+def search():
+    query = request.args.get('query', '').strip()
+    if not query:
+        return redirect(url_for('index'))
+    
+    # Ищем товары, в названии которых есть поисковый запрос (без учета регистра)
+    products = Product.query.filter(Product.brand.ilike(f'%{query}%')).all()
+    
+    # Группируем товары по категориям для удобного отображения
+    categories = {}
+    for product in products:
+        if product.category.name not in categories:
+            categories[product.category.name] = []
+        categories[product.category.name].append(product)
+    
+    return render_template('search_results.html', 
+                         query=query,
+                         categories=categories,
+                         user=session.get('user'))
 
 if __name__ == "__main__":
     create_db(app)
     app.run(debug=True)
+    
