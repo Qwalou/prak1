@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='total_styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='form_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/total_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form_styles.css') }}">
     <title>Добавление товара</title>
 </head>
 <body>
@@ -13,13 +13,13 @@
         <div class="header">
             <div>
                 <a href="/" title="На главную">
-                    <img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                    <img class="logo" src="{{ url_for('static', filename='photo/logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
                 </a>
             </div>
             <div class="header-title">Магазин для слепых</div>
         </div>
 
-        <form method="post" id="product-form" action="/add_product">
+        <form method="post" id="product-form" action="/add_product" enctype="multipart/form-data">
             <h3>Добавление товара</h3>
             <label for="name">Бренд:</label>
             <input type="text" id="brand" name="brand" maxlength="20" required><br>
@@ -34,6 +34,8 @@
                 <option value="Электронные ударные">Электронные ударные</option>
                 <option value="Акустические ударные">Акустические ударные</option>
             </select><br>
+            <label for="photo">Фото товара:</label>
+            <input type="file" id="photo" name="photo" accept="image/*"><br>
             <button type="submit" id="add-product">Добавить товар</button>
         </form>
     </div>

@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <title>Классические гитары | GuitarStar</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='total_styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='product_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/total_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/product_styles.css') }}">
 </head>
 <body>
     <div class="container">
@@ -12,79 +12,54 @@
         <div class="header">
             <div>
                 <a href="/" title="На главную">
-                    <img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                    <img class="logo" src="{{ url_for('static', filename='photo/logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
                 </a>
             </div>
             <div class="header-title">Магазин для слепых</div>
+            <div class="auth">
+                {% if user %}
+                    <div class="account">  
+                        <img src="{{ url_for('static', filename='photo/account.png') }}" alt="Profile Picture" style="width: 50px; height: 50px;"/> 
+                        <p>{{ user }}</p>
+                        <a href="/logout">Выйти</a>
+                        <a href="/cart">Корзина</a>
+                    </div>
+                {% else %}
+                    <a href="/register" id="reg">Зарегистрироваться</a>
+                    <a href="/login" id="logIn">Войти</a>
+                {% endif %}
+            </div>
         </div>
 
         <main class="main">
             <h1 class="section-title">КЛАССИЧЕСКИЕ ГИТАРЫ</h1>
-            
             <div class="products-grid">
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img class="product-image" src="{{ url_for('static', filename='alhambra_1c.jpg') }}" alt="Alhambra 1C">
+                {% for product in products %}
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            {% if product.photo %}
+                                <img class="product-image" 
+                                     src="{{ url_for('product_image', product_id=product.id) }}" 
+                                     alt="{{ product.brand }}">
+                            {% else %}
+                                <div class="no-image-placeholder">
+                                    <span>Нет изображения</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">{{ product.brand }}</h3>
+                            <div class="product-category">{{ product.category.name }}</div>
+                            <div class="product-price">{{ product.price }} ₽</div>
+                            <div class="product-added-by">Добавил(а): {{ product.user.name }}</div>
+                            <form action="{{ url_for('add_to_cart') }}" method="post">
+                                <input type="hidden" name="product_name" value="{{ product.brand }}">
+                                <input type="hidden" name="product_price" value="{{ product.price }}">
+                                <button type="submit" class="add-to-cart">Добавить в корзину</button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Alhambra 1C</h3>
-                        <div class="product-category">Классическая гитара</div>
-                        <div class="product-price">39 990 ₽</div>
-                        <form action="{{ url_for('add_to_cart') }}" method="post">
-                            <input type="hidden" name="product_name" value="Alhambra 1C">
-                            <input type="hidden" name="product_price" value="39990">
-                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
-                        </form>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img class="product-image" src="{{ url_for('static', filename='cordoba_c5.jpg') }}" alt="Cordoba C5">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Cordoba C5</h3>
-                        <div class="product-category">Классическая гитара</div>
-                        <div class="product-price">49 990 ₽</div>
-                        <form action="{{ url_for('add_to_cart') }}" method="post">
-                            <input type="hidden" name="product_name" value="Cordoba C5">
-                            <input type="hidden" name="product_price" value="49990">
-                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
-                        </form>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img class="product-image" src="{{ url_for('static', filename='yamaha_c40.jpg') }}" alt="Yamaha C40">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Yamaha C40</h3>
-                        <div class="product-category">Классическая гитара</div>
-                        <div class="product-price">19 990 ₽</div>
-                        <form action="{{ url_for('add_to_cart') }}" method="post">
-                            <input type="hidden" name="product_name" value="Yamaha C40">
-                            <input type="hidden" name="product_price" value="19990">
-                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
-                        </form>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img class="product-image" src="{{ url_for('static', filename='admira_maria.jpg') }}" alt="Admira Maria">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Admira Maria</h3>
-                        <div class="product-category">Классическая гитара</div>
-                        <div class="product-price">59 990 ₽</div>
-                        <form action="{{ url_for('add_to_cart') }}" method="post">
-                            <input type="hidden" name="product_name" value="Admira Maria">
-                            <input type="hidden" name="product_price" value="59990">
-                            <button type="submit" class="add-to-cart">Добавить в корзину</button>
-                        </form>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </main>
         <a href="/add_product" class="add-product-page">Добавить товар</a>
