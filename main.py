@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, session
-from models import db, create_db, Product
+from flask import Flask, render_template, request, redirect, url_for, session, Response
+from models import db, create_db, User, Product, Category
 from login_register import add_user, validate_user
 
 app = Flask(__name__)
@@ -55,7 +55,6 @@ def cart():
     
     cart_items = session.get('cart', [])
     
-    # Группируем товары по имени и цене
     items_summary = {}
     for item in cart_items:
         key = (item['name'], item['price'])
@@ -68,7 +67,6 @@ def cart():
                 'quantity': 1
             }
     
-    # Преобразуем в список и считаем общую сумму
     items_list = list(items_summary.values())
     total = sum(int(item['price']) * item['quantity'] for item in items_list)
     
@@ -97,7 +95,6 @@ def add_to_cart():
     })
     session.modified = True
     
-    # Возвращаем на предыдущую страницу или на страницу пианино
     return redirect(request.referrer or url_for('pianos'))
 
 @app.route('/remove_from_cart', methods=['POST'])
@@ -111,7 +108,6 @@ def remove_from_cart():
     if not product_name or not product_price or 'cart' not in session:
         return redirect(url_for('cart'))
     
-    # Удаляем все экземпляры товара с указанными именем и ценой
     session['cart'] = [
         item for item in session['cart'] 
         if item['name'] != product_name or item['price'] != product_price
@@ -153,7 +149,6 @@ def decrease_quantity():
     if not product_name or not product_price or 'cart' not in session:
         return redirect(url_for('cart'))
     
-    # Находим первый подходящий товар и удаляем его
     for i, item in enumerate(session['cart']):
         if item['name'] == product_name and item['price'] == product_price:
             session['cart'].pop(i)
@@ -167,51 +162,128 @@ def checkout():
     if 'user' not in session:
         return redirect(url_for('login'))  
 
-    # Очищаем корзину после оформления
     session.pop('cart', None)
     session.modified = True
     
     return redirect(url_for('cart'))
 
-@app.route('/electroguitars')
-def electroguitars():
-    return render_template('electroguitars.html')
-
-@app.route('/classical_guitars')
-def classical_guitars():
-    return render_template('classical_guitars.html')
-
-@app.route('/acoustic_guitars')
-def acoustic_guitars():
-    return render_template('acoustic_guitars.html')
-
-@app.route('/pianos')
-def pianos():
-    return render_template('pianos.html')
-
-@app.route('/electronic_drums')
-def electronic_drums():
-    return render_template('electronic_drums.html')
-
-@app.route('/acoustic_drums')
-def acoustic_drums():
-    return render_template('acoustic_drums.html')
+def get_route_for_category(category_name):
+    category_mapping = {
+        "Электрогитары": "electroguitars",
+        "Акустические гитары": "acoustic_guitars",
+        "Классические гитары": "classical_guitars",
+        "Пианино": "pianos",
+        "Электронные ударные": "electronic_drums",
+        "Акустические ударные": "acoustic_drums",
+    }
+    return category_mapping.get(category_name, "index")  
 
 @app.route('/add_product', methods=['GET', 'POST'])
 def add_product():
     if 'user' not in session:
-        return redirect(url_for('login')) 
-    
+        return redirect(url_for('register'))
+
     if request.method == 'POST':
         brand = request.form["brand"]
         price = request.form["price"]
-        category = request.form["category"]
-        new_product = Product(brand=brand, price=price, category=category)
+        category_name = request.form["category"]
+        photo = request.files.get("photo")
+
+        photo_data = None
+        if photo and photo.filename:
+            photo_data = photo.read()
+
+        category = Category.query.filter_by(name=category_name).first()
+        if not category:
+            category = Category(name=category_name)
+            db.session.add(category)
+            db.session.commit()
+
+        user = User.query.filter_by(name=session['user']).first() 
+        if not user:
+            return "Пользователь не найден!", 400
+
+        new_product = Product(brand=brand, price=price, photo=photo_data,  category_id=category.id, user_id=user.id) 
         db.session.add(new_product)
         db.session.commit()
-        return redirect(url_for('index'))
+
+        route_name = get_route_for_category(category_name)
+        return redirect(url_for(route_name))
+
     return render_template('product_form.html')
 
+@app.route('/product_image/<int:product_id>')
+def product_image(product_id):
+    product = Product.query.get_or_404(product_id)
+    if not product.photo:
+        return "", 404
+    return Response(product.photo, mimetype='image/jpeg')
+
+
+@app.route('/electroguitars')
+def electroguitars():
+    category = Category.query.filter_by(name="Электрогитары").first()
+    if category:
+        products = Product.query.filter_by(category_id=category.id).all()  
+    else:
+        products = []
+    return render_template('electroguitars.html', products=products, user=session.get('user'))
+
+
+
+@app.route('/acoustic_guitars')
+def acoustic_guitars():
+    category = Category.query.filter_by(name="Акустические гитары").first()
+    if category:
+        products = Product.query.filter_by(category_id=category.id).all()
+    else:
+        products = []
+    return render_template('acoustic_guitars.html', products=products, user=session.get('user'))
+
+
+@app.route('/classical_guitars')
+def classical_guitars():
+    category = Category.query.filter_by(name="Классические гитары").first()
+    if category:
+        products = Product.query.filter_by(category_id=category.id).all() 
+    else:
+        products = []
+    return render_template('classical_guitars.html', products=products, user=session.get('user'))
+
+
+@app.route('/pianos')
+def pianos():
+    category = Category.query.filter_by(name="Пианино").first()
+    if category:
+        products = Product.query.filter_by(category_id=category.id).all()  
+    else:
+        products = []
+    return render_template('pianos.html', products=products, user=session.get('user'))
+
+
+
+@app.route('/electronic_drums')
+def electronic_drums():
+    category = Category.query.filter_by(name="Электронные ударные").first()
+    if 'user' in session:
+        user = User.query.filter_by(name=session['user']).first()
+        if user and category:
+            products = Product.query.filter_by(category_id=category.id, user_id=user.id).all()
+        else:
+            products = []
+    else:
+        products = []
+    return render_template('electronic_drums.html', products=products, user=session.get('user'))
+
+@app.route('/acoustic_drums')
+def acoustic_drums():
+    category = Category.query.filter_by(name="Акустические ударные").first()
+    if category:
+        products = Product.query.filter_by(category_id=category.id).all()  
+    else:
+        products = []
+    return render_template('acoustic_drums.html', products=products, user=session.get('user'))
+
 if __name__ == "__main__":
-    create_db(app) 
+    create_db(app)
     app.run(debug=True)
