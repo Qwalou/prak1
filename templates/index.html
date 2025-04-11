@@ -2,22 +2,21 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/total_styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index1.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index2.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/total_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
 </head>
 <body>
     <div class="container">
 
         <div class="header">
             <div>
-                <img class="logo" src="{{ url_for('static', filename='photo/logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
+                <img class="logo" src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Лого" style="width: 100px; height: 100px;"/>
             </div>
             <div class="header-title">Магазин для слепых</div>
             <div class="auth">
                 {% if user %}
                     <div class="account">  
-                        <img src="{{ url_for('static', filename='photo/account.png') }}" alt="Profile Picture" style="width: 50px; height: 50px;"/> 
+                        <img src="{{ url_for('static', filename='images/account.png') }}" alt="Profile Picture" style="width: 50px; height: 50px;"/> 
                         <p>{{ user }}</p>
                         <a href="/logout">Выйти</a>
                         <a href="/cart">Корзина</a>
